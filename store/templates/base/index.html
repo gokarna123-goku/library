@@ -79,7 +79,7 @@
         </li>
         {% url 'admin_dashboard' as admin_dashboard %}
         <li>
-          <a href="{{ admin_dashboard }}" {% if request.path=='admin_dashboard' %} class="active" {% endif %}>
+          <a href="{{ admin_dashboard }}" {% if request.path=admin_dashboard %} class="active" {% endif %}>
             Dashboard
           </a>
         </li>
@@ -87,23 +87,23 @@
         <!-- <li><a href="{% url 'add_product' %}">Add Product</a></li>
             <li><a href="{% url 'product_list' %}">Product List</a></li> -->
         {% url 'logout' as logout %}
-        <li><a href="{{ logout }}" {% if request.path==logout %} class="active" {% endif %}>Logout</a></li>
+        <li><a href="{{ logout }}" {% if request.path=logout %} class="active" {% endif %}>Logout</a></li>
 
         {% else %}
         {% url 'store' as store %}
-        <li><a href="{{ store }}" {% if request.path==store %} class="active" {% endif %}>Home</a></li>
+        <li><a href="{{ store }}" {% if request.path=store %} class="active" {% endif %}>Home</a></li>
 
         {% url 'shop' as shop %}
-        <li><a href="{{ shop }}" {% if request.path==shop %} class="active" {% endif %}>Shop</a></li>
+        <li><a href="{{ shop }}" {% if request.path=shop %} class="active" {% endif %}>Shop</a></li>
 
         {% url 'blog' as blog %}
-        <li><a href="{{ blog }}" {% if request.path==blog %} class="active" {% endif %}>Blog</a></li>
+        <li><a href="{{ blog }}" {% if request.path=blog %} class="active" {% endif %}>Blog</a></li>
 
         {% url 'about' as about %}
-        <li><a href="{{ about }}" {% if request.path==about %} class="active" {% endif %}>About</a></li>
+        <li><a href="{{ about }}" {% if request.path=about %} class="active" {% endif %}>About</a></li>
 
         {% url 'contact' as contact %}
-        <li><a href="{{ contact }}" {% if request.path==contact %} class="active" {% endif %}>Contact</a></li>
+        <li><a href="{{ contact }}" {% if request.path=contact %} class="active" {% endif %}>Contact</a></li>
 
         {% if request.user.is_authenticated %}
         <li id="lg-bag">
@@ -116,18 +116,18 @@
           </a>
         </li>
         {% url 'user_dashboard' as user_dashboard %}
-        <li><a href="{{ user_dashboard }}" {% if request.path==user_dashboard %} class="active" {% endif
+        <li><a href="{{ user_dashboard }}" {% if request.path=user_dashboard %} class="active" {% endif
             %}>Dashboard</a></li>
 
         {% url 'logout' as logout %}
-        <li><a href="{{ logout }}" {% if request.path==logout %} class="active" {% endif %}>Logout</a></li>
+        <li><a href="{{ logout }}" {% if request.path=logout %} class="active" {% endif %}>Logout</a></li>
 
         {% else %}
         {% url 'login' as login %}
-        <li><a href="{{ login }}" {% if request.path==login %} class="active" {% endif %}>Login</a></li>
+        <li><a href="{{ login }}" {% if request.path=login %} class="active" {% endif %}>Login</a></li>
 
         {% url 'register' as register %}
-        <li><a href="{{ register }}" {% if request.path==register %} class="active" {% endif %}>Register</a></li>
+        <li><a href="{{ register }}" {% if request.path=register %} class="active" {% endif %}>Register</a></li>
 
         {% endif %}
         {% endif %}
@@ -198,7 +198,7 @@
   {% if messages %}
   <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
       {% endfor %}
   </ul>
   {% endif %}
@@ -216,10 +216,10 @@
       }
     })
     {% for msg in messages %}
-    Toast.fire({
-      icon: '{{msg.tags}}',
-      title: '<p>{{ msg }}</p>'
-    })
+      Toast.fire({
+        icon: '{{msg.tags}}',
+        title: '<p>{{ msg }}</p>'
+      })
     {% endfor %}
   </script>
 
