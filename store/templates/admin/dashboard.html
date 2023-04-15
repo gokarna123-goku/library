@@ -1,0 +1,52 @@
+{% extends "base/index.html" %}
+{% block content %}
+<div class="container">
+<h3 class="my-4">Dashboard</h3>
+<div class="row my-4">
+  <div class="col-sm-6 col-lg:4 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Blog Count</h5>
+        <h1 class="card-text">{{blog_count}}</h1>
+        <a href="{% url 'add_blog' %}" class="btn btn-primary">Add Blog</a>
+        <a href="{% url 'blog_list' %}" class="btn btn-primary">View Blogs</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg:4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Customer Count</h5>
+        <h1 class="card-text">{{customers_count}}</h1>
+        <a href="{% url 'customers_list' %}" class="btn btn-primary">View Customers</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg:4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Order Count</h5>
+        <h1 class="card-text">{{orders_count}}</h1>
+        <a href="{% url 'orders_list' %}"  class="btn btn-primary">View Orders</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg:4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Product Count</h5>
+        <h1 class="card-text">{{products_count}}</h1>
+        <a href="{% url 'add_product' %}"class="btn btn-primary">Add Product</a>
+        <a href="{% url 'product_list' %}" class="btn btn-primary">View Products</a>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+</div>
+{% endblock %}

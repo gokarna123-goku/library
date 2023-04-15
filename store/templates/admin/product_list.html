@@ -1,0 +1,53 @@
+{% extends "base/index.html" %}
+{% block content %}
+<div class="container">
+<h2 class="mt-4">Products</h2>
+
+{% for product in object_list %}
+<div class="col">
+  <div class="card mb-2 p-3 rounded">
+    <img class="thumbnail my-2 rounded" src="{{product.imageURL}}" style="max-width: 50%;" >
+    <div class="mt-2">
+      <h2><strong>{{product.name}}</strong></h2>
+      <p>{{product.description}}</p>
+      <hr>
+
+      <a href="{% url 'product_update_form' product.id %}" class="btn btn-outline-secondary add-btn update-cart">Edit</a>
+      <a href="{% url 'product_delete_form' product.id %}" class="btn btn-outline-danger add-btn update-cart">Delete</a>
+      
+      <a class="btn btn-outline-success" href="{% url 'product_detail_view' product.id %}">View</a>
+      <h4 style="display: inline-block; float: right"><strong>${{product.price}}</strong></h4>
+
+    </div>
+  </div>
+</div>
+{% empty %}
+  <h2>No Products Listed</h2>
+{% endfor %}
+
+<nav aria-label="Page navigation example" class="mt-4">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+
+    {% else %}
+    <li class="page-item"><a class="page-link disabled" >Previous</a></li>
+    {% endif %}
+
+  <li class="page-item d-flex align-items-center mx-2">
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  </li>
+  {% if page_obj.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+
+  {% else %}
+    <li class="page-item"><a class="page-link disabled" >Next</a></li>
+  {% endif %}
+  </ul>
+</nav>
+
+</div>
+
+{% endblock %}

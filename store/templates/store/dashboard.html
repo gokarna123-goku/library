@@ -1,0 +1,31 @@
+{% extends "base/index.html" %}
+{% block content %}
+<div class="container">
+<h3 class="my-4">Dashboard</h3>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">User Info</h5>
+        <p class="card-text">Email: {{request.user.email}}</p>
+        <p class="card-text">Name: {{customer.name}}</p>
+<hr />
+        <h5 class="card-title">Order History</h5>
+        <hr />
+        {% for order in orders %}
+        <div class="col">
+              <h5>Ordered Date: {{order.date_ordered}}</h5> 
+              <h4>Completed: {{order.complete}}</h4>
+              <h4>Transaction: {{order.transaction_id}}</h4>
+              <hr />
+        </div>
+        {% empty %}
+        <div class="col">
+          <h4>No Orders Yet</h4>
+        </div>
+        {% endfor %} 
+  </div>
+
+
+</div>
+
+</div>
+{% endblock %}

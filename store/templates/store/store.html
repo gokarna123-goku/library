@@ -1,0 +1,118 @@
+{% extends "base/index.html" %}
+{% block content %}
+{% load static %}
+    <section id="hero">
+      <h4>Welcome to Lending Library!</h4>
+      <span>Upto 20% Off</span>
+      <h1>On all books</h1>
+      <p2>
+        Browse and buy books online at the,<br />
+        lowest everyday prices.
+      </p2>
+      <button>Shop now</button>
+    </section>
+    <section id="product1" class="section-p1">
+      <h2>Featured Products</h2>
+      <div class="pro-container">
+      {% for product in products %}
+        <a class="pro" href="{% url 'productdetail' product.id %}" style="text-decoration: none;">
+          <img src="{{product.imageURL}}"/>
+          <div class="des">
+            <div class="product_container">
+            <span>{{ product.get_tag_display }}</span>
+            <h5>{{ product.name }}</h5>
+            <div class="star">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half"></i>
+            </div>
+            <h4>$ {{ product.price }}</h4>
+            </div>
+            <div class="button_container">
+              <button data-product="{{product.id}}" data-action="add" class="cart update-cart"><i class="fas fa-shopping-cart "></i></button>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+      </div>
+    </section>
+
+    <section id="banner" class="section-m1">
+      <h4>Services</h4>
+      <h2>We have more than <span>15,000 </span>Titles to choose from</h2>
+      <button class="normal">Explore More</button>
+    </section>
+
+    <section id="product1" class="section-p1">
+      <h2>Most Popular</h2>
+      <div class="pro-container">
+        {% for product in products %}
+          <a class="pro" href="{% url 'productdetail' product.id %}" style="text-decoration: none;">
+            <img src="{{product.imageURL}}"/>
+            <div class="des">
+              <div class="product_container">
+              <span>{{ product.get_tag_display }}</span>
+              <h5>{{ product.name }}</h5>
+              <div class="star">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+              </div>
+              <h4>$ {{ product.price }}</h4>
+              </div>
+              <div class="button_container">
+                <button data-product="{{product.id}}" data-action="add" class="cart update-cart"><i class="fas fa-shopping-cart "></i></button>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+        </div>
+    </section>
+
+    <section id="sm-banner" class="section-p1">
+      <div class="banner-box">
+        <h2>Deals we love</h2>
+        <span>Purchase 5 books and get 1 free!</span>
+        <button class="white">Learn More</button>
+      </div>
+      <div class="banner-box banner-box2">
+        <h2>Keep Reading</h2>
+        <span>Reading's the best way to get ideas!</span>
+        <button class="white">Collection</button>
+      </div>
+    </section>
+
+    <section id="banner3">
+      <div class="banner-box">
+        <h3>SEASONAL SALE</h3>
+        <h2>Lending Library Favorites Collection -50% OFF</h2>
+      </div>
+      <div class="banner-box banner-box2">
+        <h3>MOST POPULAR BOOKS</h3>
+        <h2>Read then now!</h2>
+      </div>
+      <div class="banner-box banner-box3">
+        <h3>ARIVALS</h3>
+        <h2>New Books coming soon!</h2>
+      </div>
+    </section>
+
+    <section id="newsletter" class="section-p1 section-m1">
+      <div class="newstext">
+        <h4>Sign Up For Newsletter</h4>
+        <p>
+          Get E-mail updates about our latest shop and
+          <span>special offers.</span>
+        </p>
+      </div>
+      <div class="form">
+        <input type="text" placeholder="Your email address" />
+        <button class="normal">Sign Up</button>
+      </div>
+    </section>
+</html>
+{% endblock %}

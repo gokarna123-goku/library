@@ -1,0 +1,25 @@
+{% extends "base/index.html" %}
+{% block content %}
+<div class="container">
+<h3 class="mt-4">Orders</h3>
+
+{% for order in object_list %}
+<div class="col">
+  <div class=" card my-4 p-4">
+    <div class="">
+      <h4>Customer Name: {{order.customer.name}}</h4> 
+      <h4>Ordered Date: {{order.date_ordered}}</h4> 
+      <h4>Completed: {{order.complete}}</h4>
+      <h4>Transaction: {{order.transaction_id}}</h4>
+    </div>
+  </div>
+</div>
+{% empty %}
+  <h2>No Orders Yet</h2>
+{% endfor %}
+
+{% include "base/pagination.html" %}
+
+</div>
+
+{% endblock %}

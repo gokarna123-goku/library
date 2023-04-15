@@ -1,0 +1,50 @@
+{% extends "base/index.html" %}
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex flex-row align-items-center justify-content-between">
+<h2 >Blogs</h2>
+      <a href="{% url 'add_blog' %}" class="btn btn-warning">Add More</a>
+  </div>
+
+{% for blog in object_list %}
+<div class="col mt-2">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{blog.title}}</h5>
+      <p class="card-text">{{ blog.description | truncatewords:"50"  }}</p>
+      <a href="{% url 'blog_detail_view' blog.slug %}" class="btn btn-primary">View</a>
+      <a class="btn btn-warning" href="{% url 'blog_update_form' blog.slug %}">Edit</a>
+      <a href="{% url 'blog_delete_form' blog.slug %}" class="btn btn-danger">Delete</a>
+    </div>
+  </div>
+</div>
+{% empty %}
+  <p>No  Blogs Created</p>
+{% endfor %}
+
+<nav aria-label="Page navigation example" class="mt-4">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+
+    {% else %}
+    <li class="page-item"><a class="page-link disabled" >Previous</a></li>
+    {% endif %}
+
+  <li class="page-item d-flex align-items-center mx-2">
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  </li>
+  {% if page_obj.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+
+  {% else %}
+    <li class="page-item"><a class="page-link disabled" >Next</a></li>
+  {% endif %}
+  </ul>
+</nav>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base/index.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container">
+  <h2 class="my-4">Add a product</h2>
+{% if form.is_multipart %}
+    <form enctype="multipart/form-data" method="post" >
+{% else %}
+    <form method="post" >
+{% endif %}
+{% csrf_token %}
+{{ form | crispy }}
+
+<button type="submit" class="btn btn-success">Update Product</button>
+</form>
+</div>
+{% endblock %}

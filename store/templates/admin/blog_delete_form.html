@@ -1,0 +1,13 @@
+{% extends "base/index.html" %}
+{% block content %}
+<div class="container my-4">
+<form method="post">{% csrf_token %}
+  <h4 class="mb-4">Are you sure you want to delete "{{ object }}"?</h4>
+ <h2>
+{{ form }}
+ </h2> 
+  <button type="submit"  class="btn btn-danger">Delete</button>
+  <a href="{% url 'blog_list' %}" class="btn btn-secondary">Go Back</a>
+</form>
+</div>
+{% endblock %}

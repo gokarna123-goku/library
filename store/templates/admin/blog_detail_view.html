@@ -1,0 +1,16 @@
+{% extends "base/index.html" %}
+
+{% block content %}
+<div class="container my-4">
+<div class="card">
+    <div class="card-body">
+      <h3 class="card-title">{{ object.title }} <sub class="text-secondary">- {{ object.user.email }}</sub></h3>
+      <p class="card-text">{{ object.description }}</p>
+
+      <a href="{% url 'blog_list' %}" class="btn btn-secondary">Go Back</a>
+      <a class="btn btn-warning" href="{% url 'blog_update_form' object.slug %}">Edit</a>
+      <a href="{% url 'blog_delete_form' object.slug %}" class="btn btn-danger">Delete</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

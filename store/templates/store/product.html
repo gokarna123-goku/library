@@ -1,0 +1,101 @@
+{% extends "base/index.html" %}
+{% block content %}
+{% load static %}
+<section id="prodetails" class="section-p1">
+  <div class="single-pro-img">
+    <img src="{{product.imageURL}}" width="100%" id="MainImg" alt="" />
+
+    <div class="small-img-group">
+      <div class="small-img-col">
+        <img
+          src="/static/images/b19.png"
+          width="100%"
+          class="small-img"
+          alt=""
+        />
+      </div>
+      <div class="small-img-col">
+        <img
+          src="/static/images/b4.png"
+          width="100%"
+          class="small-img"
+          alt=""
+        />
+      </div>
+      <div class="small-img-col">
+        <img
+          src="/static/images/b5.png"
+          width="100%"
+          class="small-img"
+          alt=""
+        />
+      </div>
+      <div class="small-img-col">
+        <img
+          src="/static/images/b17.png"
+          width="100%"
+          class="small-img"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="single-pro-details">
+    <h6>{{ product.get_tag_display }}</h6>
+    <h4>{{product.name}}</h4>
+    <h2>$ {{product.price}}</h2>
+    <button data-product="{{product.id}}" data-action="add" class="normal add-btn update-cart">Add to Cart</button>
+    <h4>Product Details</h4>
+    <span>
+      {{product.description}}  
+    </span
+    >
+  </div>
+</section>
+
+<section id="product1" class="section-p1">
+  <h2>Featured Products</h2>
+  <p>Popular Categories Collection</p>
+  <div class="pro-container">
+    {% for product in others %}
+        <a class="pro" href="{% url 'productdetail' product.id %}" style="text-decoration: none;">
+          <img src="{{product.imageURL}}"/>
+          <div class="des">
+            <div class="product_container">
+            <span>{{ product.get_tag_display }}</span>
+            <h5>
+              {{ product.name }}
+            </h5>
+            <div class="star">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half"></i>
+            </div>
+            <h4>$ {{ product.price }}</h4>
+            </div>
+            <div class="button_container">
+              <button data-product="{{product.id}}" data-action="add" class="cart update-cart"><i class="fas fa-shopping-cart "></i></button>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+  </div>
+</section>
+
+<section id="newsletter" class="section-p1 section-m1">
+  <div class="newstext">
+    <h4>Sign Up For Newsletter</h4>
+    <p>
+      Get E-mail updates about our latest shop and
+      <span>special offers.</span>
+    </p>
+  </div>
+  <div class="form">
+    <input type="text" placeholder="Your email address" />
+    <button class="normal">Sign Up</button>
+  </div>
+</section>
+{% endblock %}

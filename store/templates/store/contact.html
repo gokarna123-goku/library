@@ -1,0 +1,76 @@
+{% extends "base/index.html" %}
+{% block content %}
+{% load static %}
+<section id="page-header" class="about-header">
+  <h2>#HEY_let's_talk</h2>
+  <p>We woulld love to hear from you!</p>
+</section>
+
+<section id="contact-details" class="section-p1">
+  <div class="details">
+    <span>GET IN TOUCH</span>
+    <h2>Contact us and give us a visit today </h2>
+    <h3>Head Library</h3>
+    <div>
+      <li>
+        <i class="fal fa-map">
+          <p>Thamel, Nepal</p>
+        </i>
+      </li>
+      <li>
+        <i class="far fa-envelope">
+          <p>library@gmail.com</p>
+        </i>
+      </li>
+      <li>
+        <i class="fas fa-phone-alt">
+          <p>+977 9812345678</p>
+        </i>
+      </li>
+      <li>
+        <i class="far fa-clock">
+          <p>Sunday to Friday: 7:00 am to 8:00 pm</p>
+        </i>
+      </li>
+    </div>
+  </div>
+  <div class="map">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14127.758712353281!2d85.3279776!3d27.719148690309673!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x4ddb15102c035cd1!2sBooks%20Mandala!5e0!3m2!1sen!2snp!4v1658606273825!5m2!1sen!2snp" 
+      width="600" height="450" 
+      style="border:0;" allowfullscreen=""
+       loading="lazy" 
+       referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+<section id="form-details">
+  <form action="">
+    <span>LEAVE A MESSAGE</span>
+    <h2>We love to hear from you</h2>
+    <input type="text" placeholder="Your Name" />
+    <input type="text" placeholder="E-mail" />
+    <input type="text" placeholder="Subject" />
+    <textarea name="" id="" cols="30" rows="10" placeholder="Your Message">
+    </textarea>
+    <button class="normal">Submit</button>
+  </form>
+
+  
+</section>
+
+<section id="newsletter" class="section-p1 section-m1">
+  <div class="newstext">
+    <h4>Sign Up For Newsletter</h4>
+    <p>
+      Get E-mail updates about our latest shop and
+      <span>special offers.</span>
+    </p>
+  </div>
+  <div class="form">
+    <input type="text" placeholder="Your email address" />
+    <button class="normal">Sign Up</button>
+  </div>
+</section>
+
+{% endblock %}

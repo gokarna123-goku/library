@@ -1,0 +1,16 @@
+{% extends "base/index.html" %}
+
+{% block content %}
+<div class="container">
+<div class="card">
+    <img class="card-img-top" style="max-width: 50%;" src="{{object.imageURL}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{ object.name }}</h5>
+      <p class="card-text">{{ object.description }}</p>
+      <a href="{% url 'product_list' %}" class="btn btn-outline-primary">Go back</a>
+      <a href="{% url 'product_update_form' object.id %}" class="btn btn-outline-secondary">Edit</a>
+      <a href="{% url 'product_delete_form' object.id %}" class="btn btn-outline-danger">Delete</a>
+    </div>
+  </div> 
+</div>
+{% endblock %}

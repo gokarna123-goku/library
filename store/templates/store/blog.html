@@ -1,0 +1,75 @@
+{% extends "base/index.html" %}
+{% block content %}
+{% load static %}
+<section id="page-header" class="blog-header">
+  <h2>#readmore</h2>
+  <!-- <p>Read all the case studies about our products!</p> -->
+</section>
+
+<section id="blog">
+  {% for blog in object_list %}
+  <div class="blog-box">
+    <div class="blog-img">
+      <img src="/static/images/products/b19.png" alt="" />
+    </div>
+    <div class="blog-details">
+      <h4>The Ordinary AHA 30% + BHA 2% Exfoliating Peeling Solution</h4>
+      <br />
+      <strong>What it is: </strong>
+      {{ blog.description | truncatewords:"50"  }}<br /><br />
+
+      <b>Skin Type:</b> Normal, Combination, and Oily <br /><br />
+
+      <b>Skincare Concerns:</b> Dullness, Uneven Texture, and
+      Acne/Blemishes<br /><br />
+
+      <b>Formulation:</b>
+      Liquid<br /><br />
+      
+      Highlighted Ingredients: Glycolic Acid, Lactic Acid,
+      Salicylic Acid <br /><br />
+
+    </div>
+    <h1>{{ blog.published_at | date:"m/d" }}</h1>
+  </div>
+  {% endfor %}
+</section>
+
+<nav aria-label="Page navigation example" class="mt-4">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+
+    {% else %}
+    <li class="page-item"><a class="page-link disabled" >Previous</a></li>
+    {% endif %}
+
+  <li class="page-item d-flex align-items-center mx-2">
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  </li>
+  {% if page_obj.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+
+  {% else %}
+    <li class="page-item"><a class="page-link disabled" >Next</a></li>
+  {% endif %}
+  </ul>
+</nav>
+
+<section id="newsletter" class="section-p1 section-m1">
+  <div class="newstext">
+    <h4>Sign Up For Newsletter</h4>
+    <p>
+      Get E-mail updates about our latest shop and
+      <span>special offers.</span>
+    </p>
+  </div>
+  <div class="form">
+    <input type="text" placeholder="Your email address" />
+    <button class="normal">Sign Up</button>
+  </div>
+</section>
+
+{% endblock %}

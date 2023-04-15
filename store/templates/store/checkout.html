@@ -1,0 +1,258 @@
+{% extends 'base/index.html' %} {% load static %} {% block content %}
+<div class="row ml-2">
+  <div class="col-lg-6">
+    <div class="box-element" id="form-wrapper">
+      <form id="form">
+        <div id="user-info">
+          <div class="form-field">
+            <input
+              required
+              class="form-control"
+              type="text"
+              name="name"
+              placeholder="Name.."
+            />
+          </div>
+          <div class="form-field">
+            <input
+              required
+              class="form-control"
+              type="email"
+              name="email"
+              placeholder="Email.."
+            />
+          </div>
+        </div>
+
+        <div id="shipping-info">
+          <hr />
+          <p>Shipping Information:</p>
+          <hr />
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="address"
+              placeholder="Address.."
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="city"
+              placeholder="City.."
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="state"
+              placeholder="State.."
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="zipcode"
+              placeholder="Zip code.."
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="text"
+              name="country"
+              placeholder="Country .."
+            />
+          </div>
+        </div>
+
+        <hr />
+        <input
+          id="form-button"
+          class="btn btn-success btn-block"
+          type="submit"
+          value="Continue"
+        />
+      </form>
+    </div>
+    <br />
+
+    <div class="box-element hidden" id="payment-info">
+      <small>Paypal Options</small>
+      <!--<button id="make-payment">Make payment</button>-->
+      <div id="paypal-button-container">
+        Make Payment
+      </div>
+    </div>
+  </div>
+  <!-- 
+
+    TEST CARD
+    
+    Card Type: Visa
+
+    Card Number: 4032033860014765
+
+    Expiration Date: 04/2024
+
+    CVV: 157
+   -->
+
+  <div class="col-lg-6 mt-4">
+    <div class="box-element">
+      <a class="btn btn-outline-dark" href="{% url 'cart' %}"
+        >&#x2190; Back to Cart</a
+      >
+      <hr />
+      <h3>Order Summary</h3>
+      <hr />
+      <section id="cart" class="section-p1">
+        <table width="100%">
+          <thead>
+            <tr>
+              <td>Image</td>
+              <td>Product</td>
+              <td>Price</td>
+              <td>Quantity</td>
+              <td>Subtotal</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+            <tr>
+              <td><img src="{{item.product.imageURL}}" alt="" /></td>
+              <td>{{item.product.name}}</td>
+              <td>${{item.product.price|floatformat:2}}</td>
+              <td>
+                <div class="d-flex align-items-baseline justify-content-center">
+                  <p style="margin-right: 10px;">{{item.quantity}}</p>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <img  data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" style="cursor:pointer; margin-right: 5px; height: 15px; width:15px;" src="{% static  'images/arrow-up.png' %}">
+                    <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" style="cursor:pointer;height: 15px; width:15px;" src="{% static  'images/arrow-down.png' %}">
+                  </div>
+                </div>
+              </td>
+              <td>${{item.get_total|floatformat:2}}</td>  
+            </tr>
+            {% endfor %}
+            <tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AeKcvjpISUj8ZnXZGFg8dwi5jQ4UTf3EfGAIe-CPVQcE0kSqsT-LJqzTjMtrg6sWM0V340Yg8QBG0ppX&currency=USD&disable-funding=credit"></script>
+
+	<script>
+		var total = '{{order.get_cart_total}}'
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+        	style: {
+                color:  'blue',
+                shape:  'rect',
+            },
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value:parseFloat(total).toFixed(2)
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    submitFormData()
+                });
+            }
+
+        }).render('#paypal-button-container');
+    </script>
+<script type="text/javascript">
+  var shipping = '{{order.shipping}}'
+  var total = '{{order.get_cart_total}}'
+
+  if (shipping == 'False') {
+    document.getElementById('shipping-info').innerHTML = ''
+  }
+  if (user != 'AnonymousUser') {
+    document.getElementById('user-info').innerHTML = ''
+  }
+  if (shipping == 'False' && user != 'AnonymousUser') {
+    //Hide entire form if user is logged in and shipping is false
+    document.getElementById('form-wrapper').classList.add('d-none')
+    //Show payment if logged in user wants to buy an that does not require shipping
+    document.getElementById('payment-info').classList.remove('d-none')
+  }
+
+  var form = document.getElementById('form')
+  form.addEventListener('submit', function (e) {
+    e.preventDefault()
+    console.log('Form submitted')
+    document.getElementById('form-button').classList.add('d-none')
+    document.getElementById('payment-info').classList.remove('d-none')
+  })
+  document
+    .getElementById('make-payment')
+    .addEventListener('click', function (e) {
+      submitFormData()
+    })
+  function submitFormData() {
+    console.log('Payment button clicked')
+
+    var userFormData = {
+      name: null,
+      email: null,
+      total: total,
+    }
+    var shippingInfo = {
+      address: null,
+      city: null,
+      state: null,
+      zipcode: null,
+    }
+    if (shipping != 'False') {
+      shippingInfo.address = form.address.value
+      shippingInfo.city = form.city.value
+      shippingInfo.state = form.state.value
+      shippingInfo.zipcode = form.zipcode.value
+    }
+    if (user == 'AnonymousUser') {
+      userFormData.name = form.name.value
+      userFormData.email = form.email.value
+    }
+
+    var url = '/process_order/'
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+
+        'X-CSRFToken': csrftoken,
+      },
+      body: JSON.stringify({ form: userFormData, shipping: shippingInfo }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data)
+
+        cart = {}
+        document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
+
+        window.location.href = "{% url 'store' %}"
+      })
+  }
+</script>
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends "base/index.html" %}
+{% block content %}
+<div class="container">
+<h3 class="mt-4">Users</h3>
+
+{% for customer in object_list %}
+<div class="col">
+  <div class=" card my-4 p-4">
+    <div class="">
+      <h4>Email: {{customer.email}}</h4> 
+      <h4>User Id: {{customer.id}}</h4> 
+      <h4>Name: {{customer.name}}</h4>
+    </div>
+  </div>
+</div>
+{% empty %}
+  <h2>No Products Listed</h2>
+{% endfor %}
+
+{% include "base/pagination.html" %}
+
+</div>
+
+{% endblock %}

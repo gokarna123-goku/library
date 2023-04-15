@@ -1,0 +1,84 @@
+{% extends 'base/index.html' %} {% load static %} {% block content %}
+
+    <section id="page-header" class="about-header">
+      <h2>#let's_talk</h2>
+      <p>LEAVE A MESSAGE, We love to hear from you!</p>
+    </section>
+
+    <section id="cart" class="section-p1">
+      <table width="100%">
+        <thead>
+          <tr>
+            <td>Image</td>
+            <td>Product</td>
+            <td>Price</td>
+            <td>Quantity</td>
+            <td>Subtotal</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td><img src="{{item.product.imageURL}}" alt="" /></td>
+            <td>{{item.product.name}}</td>
+            <td>${{item.product.price|floatformat:2}}</td>
+            <td>
+              <div class="d-flex align-items-baseline justify-content-center">
+                <p style="margin-right: 10px;">{{item.quantity}}</p>
+                <div class="d-flex align-items-center justify-content-center">
+                  <img  data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" style="cursor:pointer; margin-right: 5px; height: 15px; width:15px;" src="{% static  'images/arrow-up.png' %}">
+                  <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" style="cursor:pointer;height: 15px; width:15px;" src="{% static  'images/arrow-down.png' %}">
+                </div>
+              </div>
+            </td>
+            <td>${{item.get_total|floatformat:2}}</td>  
+          </tr>
+          {% empty %}
+          <tr>
+            <td>empty</td>
+            <td>empty</td>
+            <td>0</td>
+            <td>
+              empty
+            </td>
+            <td>0</td>  
+          </tr>
+          {% endfor %}
+          <tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="cart-add" class="section-p1">
+      <div id="subtotal">
+        <h3>Cart Totals</h3>
+        <table>
+          <tr>
+            <td>Cart Total Items</td>
+            <td>{{order.get_cart_items}}</td>
+          </tr>
+          <tr>
+            <td>Cart SubTotal</td>
+            <td>${{order.get_cart_total|floatformat:2}}</td>
+          </tr>
+          <tr>
+            <td>Shipping</td>
+            <td>Free</td>
+          </tr>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>${{order.get_cart_total|floatformat:2}}</strong></td>
+          </tr>
+        </table>
+       {% if order.get_cart_total <= 0  %} 
+       <p>Nothing in cart right now<p>
+       <a class="btn btn-outline-dark " href="{% url 'shop' %}">
+         Go to Shop</a>
+        {%else%}
+
+       <a class="btn btn-outline-dark" href="{% url 'checkout' %}">
+         Proceed to Checkout</a>
+      {%endif%}
+      </div>
+    </section>
+{% endblock content %}

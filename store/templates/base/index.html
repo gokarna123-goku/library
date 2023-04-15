@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lending Library</title>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+
+    <script type="text/javascript">
+      var user = '{{request.user}}'
+
+      function getToken(name) {
+        var cookieValue = null
+        if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';')
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim()
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === name + '=') {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              )
+              break
+            }
+          }
+        }
+        return cookieValue
+      }
+      var csrftoken = getToken('csrftoken')
+
+      function getCookie(name) {
+        // Split cookie string and get all individual name=value pairs in an array
+        var cookieArr = document.cookie.split(';')
+
+        // Loop through the array elements
+        for (var i = 0; i < cookieArr.length; i++) {
+          var cookiePair = cookieArr[i].split('=')
+
+          /* Removing whitespace at the beginning of the cookie name
+		        and compare it with the given string */
+          if (name == cookiePair[0].trim()) {
+            // Decode the cookie value and return
+            return decodeURIComponent(cookiePair[1])
+          }
+        }
+
+        // Return null if not found
+        return null
+      }
+      var cart = JSON.parse(getCookie('cart'))
+
+      if (cart == undefined) {
+        cart = {}
+        console.log('Cart Created!', cart)
+        document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
+      }
+      console.log('Cart:', cart)
+    </script>
+  </head>
+  <body>
+    <section id="header">
+      <a href="{{ store }}"><img src="{% static 'images/logo1.png' %}" class="logo" alt="" /></a>
+      <div>
+        <ul id="navbar">
+          {% if request.user.is_superuser %}
+            <li><strong>
+            Hi, {{request.user.username}}
+         </strong> </li>
+          {% url 'admin_dashboard' as admin_dashboard %}
+          <li><a href="{{ admin_dashboard }}"{% if request.path == admin_dashboard %} class="active"{% endif %}>Dashboard</a></li>
+
+            <!-- <li><a href="{% url 'add_product' %}">Add Product</a></li>
+            <li><a href="{% url 'product_list' %}">Product List</a></li> -->
+          {% url 'logout' as logout %}
+          <li><a href="{{ logout }}"{% if request.path == logout %} class="active"{% endif %}>Logout</a></li>
+          
+          {% else %}
+          {% url 'store' as store %}
+          <li><a href="{{ store }}"{% if request.path == store %} class="active"{% endif %}>Home</a></li>
+
+          {% url 'shop' as shop %}
+          <li><a href="{{ shop }}"{% if request.path == shop %} class="active"{% endif %}>Shop</a></li>
+              
+          {% url 'blog' as blog %}
+          <li><a href="{{ blog }}"{% if request.path == blog %} class="active"{% endif %}>Blog</a></li>
+          
+          {% url 'about' as about %}
+          <li><a href="{{ about }}"{% if request.path == about %} class="active"{% endif %}>About</a></li>
+
+          {% url 'contact' as contact %}
+          <li><a href="{{ contact }}"{% if request.path == contact %} class="active"{% endif %}>Contact</a></li>
+
+          {% if request.user.is_authenticated %}
+          <li id="lg-bag">
+            <a href="{% url 'cart' %}"
+              ><i class="fa fa-shopping-bag" aria-hidden="true"></i>
+              <sup class="text-danger h6"><bold>
+                {{cartItems}}
+              </bold></sup>
+            </a>
+          </li>
+          {% url 'user_dashboard' as user_dashboard %}
+          <li><a href="{{ user_dashboard }}"{% if request.path == user_dashboard %} class="active"{% endif %}>Dashboard</a></li>
+
+          {% url 'logout' as logout %}
+          <li><a href="{{ logout }}"{% if request.path == logout %} class="active"{% endif %}>Logout</a></li>
+          
+          {% else %}
+          {% url 'login' as login %}
+          <li><a href="{{ login }}"{% if request.path == login %} class="active"{% endif %}>Login</a></li>
+
+          {% url 'register' as register %}
+          <li><a href="{{ register }}"{% if request.path == register %} class="active"{% endif %}>Register</a></li>
+
+          {% endif %}
+          {% endif %}
+          <a href="#" id="close"><i class="far fa-times"></i></a>
+        </ul>
+      </div>
+      <div id="mobile">
+        <a href="{% url 'store' %}"
+          ><i class="fa fa-shopping-bag" aria-hidden="true"></i>
+        </a>
+        <i id="bar" class="fas fa-outdent"></i>
+      </div>
+    </section>
+
+    {% block content %}
+
+    {% endblock %}
+    <footer class="section-p1">
+      <div class="col">
+        <img class="logo" src="{% static 'images/logo1.png' %}" alt="" />
+        <a href="{% url 'store' %}" ></a>
+        <h4>Contact</h4>
+        <p><strong> Address: </strong> Thamel, 111, Kathmandu</p>
+        <p><strong> Phone: </strong> +977 9827367633 / +977 9827364534 </p>
+        <p><strong> Hours: </strong> 7:00 am - 8:00 pm, Sun - Fri</p>
+        <div class="follow">
+          <h4>Follow us</h4>
+          <div class="icon">
+            <a href="https://www.facebook.com/" target="_blank" class="fab fa-facebook-f"></a>
+            <a href="https://www.twitter.com/" target="_blank"class="fab fa-twitter"></a>
+            <a href="https://www.instagram.com/" target="_blank"class="fab fa-instagram"></a>
+            <a href="https://www.linkedin.com/" target="_blank"class="fab fa-linkedin"></a>
+            <a href="https://www.pinterest.com/" target="_blank" class="fab fa-pinterest"></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <h4>About</h4>
+        <a href="{{ about }}">About us</a>
+        <a href="#">Delivery Information</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="{{ contact }}">Contact Us</a>
+      </div>
+
+      <div class="col">
+        <h4>My Account</h4>
+        <a href="{{ register }}">Sign In</a>
+        <a href="#">View Cart</a>
+        <a href="#">My Wishlist</a>
+        <a href="#">Track My Order</a>
+        <a href="#">Help</a>
+      </div>
+
+      <div class="col install">
+        <h4>Secured Payment Gateways</h4>
+        <img src="/static/images/pay/pay.png" alt="" />
+      </div>
+
+      <div class="copyright">
+        <p>© 2022, Lending Library</p>
+      </div>
+    </footer>
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+    <script>
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      {% for msg in messages %}
+      Toast.fire({
+        icon: '{{msg.tags}}',
+        title: '<p>{{ msg }}</p>'
+      })
+      {% endfor %}
+    </script>
+  </body>
+  </html>

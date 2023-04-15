@@ -1,0 +1,106 @@
+{% extends "base/index.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cara</title>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section id="page-header">
+      <h2>#stayhome</h2>
+      <p>Stay tuned for seasonal sales!</p>
+    </section>
+    <section class="section-p1">
+      <h5 class="mb-3">Search for products</h5>
+      <form class="d-flex my-2 my-lg-0" method="GET">
+        <input class="form-control mr-sm-2 w-100" name="q" type="search" placeholder="Search" aria-label="Search" value="{{ request.GET.q }}">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </section>
+
+    <section id="product1" class="section-p1">
+      <div class="pro-container">
+        {% for product in object_list %}
+          <a class="pro" href="{% url 'productdetail' product.id %}" style="text-decoration: none;">
+            <img src="{{product.imageURL}}"/>
+            <div class="des">
+              <div class="product_container">
+              <span>{{ product.get_tag_display }}</span>
+              <h5>{{ product.name }}</h5>
+              <div class="star">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+              </div>
+              <h4>$ {{ product.price }}</h4>
+              </div>
+              <div class="button_container">
+                <button data-product="{{product.id}}" data-action="add" class="cart update-cart"><i class="fas fa-shopping-cart "></i></button>
+              </div>
+            </div>
+          </a>
+        {% empty %}
+        <p style="margin-top: -80px;" class="text-center">Sorry, no product for <strong>{{request.GET.q}}</strong> found. Try searching with another keyword</p>
+        {% endfor %}
+        </div>
+
+        <div>
+          <div class="d-flex justify-content-between align-items-center">
+      <h3 class="mt-4">New Arrivals</h3>
+      <p>Cosrx Now in Stock!</p>
+          </div>
+
+      <div class="pro-container">
+        {% for product in object_list %}
+        <a class="pro" href="{% url 'productdetail' product.id %}" style="text-decoration: none;">
+          <img src="{{product.imageURL}}"/>
+          <div class="des">
+            <div class="product_container">
+            <span>{{ product.get_tag_display }}</span>
+            <h5>{{ product.name }}</h5>
+            <div class="star">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half"></i>
+            </div>
+            <h4>$ {{ product.price }}</h4>
+            </div>
+            <div class="button_container">
+              <button data-product="{{product.id}}" data-action="add" class="cart update-cart"><i class="fas fa-shopping-cart "></i></button>
+            </div>
+          </div>
+        </a>
+        {% empty %}
+        <p style="margin-top: -20px;">Sorry, no product for <strong>{{request.GET.q}}</strong> found. Try searching with another keyword</p>
+      {% endfor %} 
+      </div>
+    </section>
+  {% include "base/pagination.html" %}
+    <section id="newsletter" class="section-p1 section-m1">
+      <div class="newstext">
+        <h4>Sign Up For Newsletter</h4>
+        <p>
+          Get E-mail updates about our latest shop and
+          <span>special offers.</span>
+        </p>
+      </div>
+      <div class="form">
+        <input type="text" placeholder="Your email address" />
+        <button class="normal">Sign Up</button>
+      </div>
+    </section>
+  </body>
+</html>
+{% endblock %}
