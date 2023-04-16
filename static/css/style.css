@@ -162,8 +162,8 @@ body {
   display: none;
 }
 #hero {
-  background-image: url('/static/images/banner/temp1.png');
-  height: 70vh;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.66)), url('/static/images/banner/library.jpg'); 
+  height: 90vh;
   width: 100%;
   background-size: cover;
   background-position: top 25% right 0;
